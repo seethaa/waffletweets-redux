@@ -53,6 +53,12 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
+Screenshots:
+
+<img src='http://i.imgur.com/JCsH6tV.jpg' title='screenshot' width="300" alt='screenshot' />
+<img src='http://i.imgur.com/1tj92K8.jpg' title='screenshot' width="300" alt='screenshot' />
+<img src='http://i.imgur.com/zdTFlWg.jpg' title='screenshot' width="300" alt='screenshot' />
+
 Sign in:
 
 <img src='http://i.imgur.com/7IBVCYO.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />

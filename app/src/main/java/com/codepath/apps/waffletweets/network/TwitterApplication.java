@@ -1,4 +1,4 @@
-package com.codepath.apps.waffletweets;
+package com.codepath.apps.waffletweets.network;
 
 import android.content.Context;
 

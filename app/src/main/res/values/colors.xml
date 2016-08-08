@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#fff</color>
+    <color name="colorPrimary">#fff</color>
+    <color name="textColorPrimary">#000</color>
+
+    <color name="black">#000</color>
+    <color name="twitter_blue">#1da1f2</color>
+    <color name="twitter_light_gray">#eff3f5</color>
+    <color name="twitter_divider_gray">#f0f3f5</color>
+    <color name="twitter_dark_gray">#8899a6</color>
+    <color name="twitter_screenname_gray">#8899a6</color>
+
+
+
+
+</resources>

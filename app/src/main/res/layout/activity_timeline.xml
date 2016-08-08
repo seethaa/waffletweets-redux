@@ -1,18 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cjj.MaterialRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refresh"
+    app:overlay="false"
+    app:wave_show="false"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<android.support.design.widget.CoordinatorLayout
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codepath.apps.waffletweets.TimelineActivity">
+    app:layout_behavior="com.codepath.floatingactionbuttontest.ScrollAwareFABBehavior"
+    tools:context=".activities.TimelineActivity">
 
-    <ListView
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lvTweets"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:src="@drawable/twittercomposenormal"
+        android:id="@+id/fabCompose"
+        app:backgroundTint="@color/twitter_blue"
+        app:fabSize="normal"
+        android:scaleType="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lvTweets"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-</RelativeLayout>
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_anchor="@id/lvTweets"
+        app:layout_anchorGravity="bottom|right|end"/>
+
+</android.support.design.widget.CoordinatorLayout>
+
+    </com.cjj.MaterialRefreshLayout>
+
+

@@ -3,5 +3,8 @@
 
     <string name="app_name">Waffle Tweets</string>
     <string name="login_label">Connect with Twitter</string>
+    <string name="created_at_placeholder">3 seconds ago</string>
+    <string name="tweet_placeholder">tweet text</string>
+    <string name="whats_happening">What\'s happening?</string>
 
 </resources>

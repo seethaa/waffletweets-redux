@@ -2,17 +2,25 @@ package com.codepath.apps.waffletweets.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 /**
+ * Twitter User object
  * Created by seetha on 8/2/16.
  */
+@Parcel
 public class User {
-    //list attributes
     private String name;
     private long uid;
     private String screenName;
     private String profileImageURL;
 
+    /**
+     * Empty constructor for Parceler
+     */
+    public User(){
+        //empty constructor
+    }
     public String getName() {
         return name;
     }

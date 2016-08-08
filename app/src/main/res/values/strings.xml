@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Waffle Tweets</string>
+    <string name="app_name">WaffleTweets</string>
     <string name="login_label">Connect with Twitter</string>
     <string name="created_at_placeholder">3 seconds ago</string>
     <string name="tweet_placeholder">tweet text</string>

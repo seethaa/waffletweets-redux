@@ -31,17 +31,17 @@
         android:layout_height="200dp"
         android:gravity="top"
         android:inputType="textMultiLine"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:maxLines="10"
         android:hint="@string/whats_happening"
         android:id="@+id/etComposeTweet"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/btnCancel"
-        android:layout_alignEnd="@+id/btnCancel"
         android:layout_below="@+id/ivProfileImage"
         android:background="@android:color/transparent"
-        />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -52,5 +52,15 @@
         android:clickable="true"
         android:id="@+id/btnTweet"
         android:layout_below="@+id/etComposeTweet"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="140"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/tvCharRemaining"
+        android:layout_above="@+id/btnTweet"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -14,7 +14,7 @@
     <color name="twitter_dark_gray">#8899a6</color>
     <color name="twitter_screenname_gray">#8899a6</color>
 
-
+    <color name="black_overlay">#66000000</color>
 
 
 </resources>

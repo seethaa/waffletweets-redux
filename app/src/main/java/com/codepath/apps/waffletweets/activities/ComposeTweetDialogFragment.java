@@ -2,20 +2,23 @@ package com.codepath.apps.waffletweets.activities;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.waffletweets.R;
@@ -45,6 +48,8 @@ public class ComposeTweetDialogFragment extends DialogFragment {
     ImageButton btnCancel;
     @BindView(R.id.btnTweet) ImageButton btnTweet;
     @BindView(R.id.etComposeTweet) EditText etText;
+    @BindView(R.id.tvCharRemaining) TextView tvCharRemaining;
+
 
     private static String mTweetBody;
     private static User mCurrentUser;
@@ -55,7 +60,7 @@ public class ComposeTweetDialogFragment extends DialogFragment {
     }
 
     @OnClick(R.id.btnTweet)
-    public void saveTweet(Button button) {
+    public void saveTweet(ImageButton button) {
 
         if (isNetworkAvailable() && isOnline()) {
             mTweetBody = etText.getText().toString();
@@ -144,8 +149,40 @@ public class ComposeTweetDialogFragment extends DialogFragment {
 
         }
 
-        etText.getBackground().clearColorFilter();
+        //count characters
+        etText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Fires right as the text is being changed (even supplies the range of text)
 
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // Fires right before text is changing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // count character and enable/disable button
+                int currChars = etText.getText().toString().length();
+                int remaining = 140 - currChars;
+                tvCharRemaining.setText(remaining+"");
+//                System.out.println("DEBUGGY text change: " + etText.getText().toString() + " " + remaining);
+
+                if (remaining <0){//if negative, disable buttona and make text red
+                    tvCharRemaining.setTextColor(Color.RED);
+                    btnTweet.setClickable(false);
+                }
+                else{
+                    tvCharRemaining.setTextColor(Color.GRAY);
+                    btnTweet.setClickable(true);
+
+                }
+
+            }
+        });
         Glide.with(getContext()).load(mCurrentUser.getProfileImageURL()).centerCrop().placeholder(R.drawable.ic_launcher)
         .bitmapTransform(new RoundedCornersTransformation(getContext(), 5, 5))
         .into(ivProfileImage);

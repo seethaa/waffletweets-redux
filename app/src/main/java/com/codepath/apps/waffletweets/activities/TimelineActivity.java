@@ -17,11 +17,11 @@ import android.util.Log;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.codepath.apps.waffletweets.R;
-import com.codepath.apps.waffletweets.network.TwitterApplication;
-import com.codepath.apps.waffletweets.network.TwitterClient;
 import com.codepath.apps.waffletweets.adapters.TweetsArrayAdapter;
 import com.codepath.apps.waffletweets.models.Tweet;
 import com.codepath.apps.waffletweets.models.User;
+import com.codepath.apps.waffletweets.network.TwitterApplication;
+import com.codepath.apps.waffletweets.network.TwitterClient;
 import com.codepath.apps.waffletweets.utils.EndlessRecyclerViewScrollListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -45,7 +45,6 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     private User mCurrentUser;
 
     private MaterialRefreshLayout mMaterialRefreshLayout;
-
     @BindView(R.id.lvTweets)
     RecyclerView mRecyclerView;
     @BindView(R.id.fabCompose)
@@ -60,6 +59,10 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         //set background color of actionbar
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.waffletweetslogofinal);
+
         ButterKnife.bind(this);
 
         mLinearLayoutManager = new LinearLayoutManager(this);

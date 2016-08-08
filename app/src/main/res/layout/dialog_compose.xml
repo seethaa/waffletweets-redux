@@ -28,21 +28,27 @@
 
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
+        android:gravity="top"
         android:inputType="textMultiLine"
         android:ems="10"
+        android:maxLines="10"
         android:hint="@string/whats_happening"
         android:id="@+id/etComposeTweet"
-        android:layout_below="@+id/btnCancel"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/btnCancel"
-        android:layout_alignEnd="@+id/btnCancel" />
+        android:layout_alignEnd="@+id/btnCancel"
+        android:layout_below="@+id/ivProfileImage"
+        android:background="@android:color/transparent"
+        />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tweet"
+        android:background="#0000"
+        android:src="@drawable/tweetbutton"
         android:clickable="true"
         android:id="@+id/btnTweet"
         android:layout_below="@+id/etComposeTweet"

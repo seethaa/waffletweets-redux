@@ -43,7 +43,7 @@ public class ComposeTweetDialogFragment extends DialogFragment {
     @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
     @BindView(R.id.btnCancel)
     ImageButton btnCancel;
-    @BindView(R.id.btnTweet) Button btnTweet;
+    @BindView(R.id.btnTweet) ImageButton btnTweet;
     @BindView(R.id.etComposeTweet) EditText etText;
 
     private static String mTweetBody;
@@ -143,6 +143,8 @@ public class ComposeTweetDialogFragment extends DialogFragment {
             mCurrentUser = Parcels.unwrap(getArguments().getParcelable("currUser"));
 
         }
+
+        etText.getBackground().clearColorFilter();
 
         Glide.with(getContext()).load(mCurrentUser.getProfileImageURL()).centerCrop().placeholder(R.drawable.ic_launcher)
         .bitmapTransform(new RoundedCornersTransformation(getContext(), 5, 5))

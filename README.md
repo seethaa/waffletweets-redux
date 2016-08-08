@@ -44,8 +44,10 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
-* [x] Check for internet connection before composing tweet.
+* [x] Check for internet connection before posting tweet.
 * [x] Rounded Images for profile images
+* [x] Pull to refresh using MaterialRefreshLayout
+* [x] Added twitter-branded logo
 
 ## Video Walkthrough
 
@@ -63,10 +65,13 @@ Describe any challenges encountered while building the app.
 
 - [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
 - [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
+- [Glide]
+- [MaterialRefreshLayout]
+- [NiftyDialogEffects]
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2016] [Seetha Annamraju]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

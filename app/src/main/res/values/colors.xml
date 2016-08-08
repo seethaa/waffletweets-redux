@@ -4,6 +4,8 @@
     <color name="white">#fff</color>
     <color name="colorPrimary">#fff</color>
     <color name="textColorPrimary">#000</color>
+    <color name="colorAccent">#1da1f2</color>
+
 
     <color name="black">#000</color>
     <color name="twitter_blue">#1da1f2</color>

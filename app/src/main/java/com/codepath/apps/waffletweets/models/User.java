@@ -14,6 +14,9 @@ public class User {
     private long uid;
     private String screenName;
     private String profileImageURL;
+    private String tagline;
+    private int followersCount;
+    private int followingsCount;
 
     /**
      * Empty constructor for Parceler
@@ -37,6 +40,17 @@ public class User {
         return profileImageURL;
     }
 
+    public String getTagline() {
+        return tagline;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public int getFriendsCount() {
+        return followingsCount;
+    }
     //deserialize user json -> <User>
     public static User fromJSON(JSONObject json){
         User user = new User();
@@ -45,6 +59,10 @@ public class User {
             user.uid = json.getLong("id");
             user.screenName = json.getString("screen_name");
             user.profileImageURL = json.getString("profile_image_url");
+            user.tagline = json.getString("description");
+            user.followersCount = json.getInt("followers_count");
+            user.followingsCount = json.getInt("friends_count");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

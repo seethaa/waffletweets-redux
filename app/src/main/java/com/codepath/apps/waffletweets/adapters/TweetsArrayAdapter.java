@@ -18,7 +18,6 @@ import com.codepath.apps.waffletweets.models.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -53,7 +52,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
      * Refreshes tweets and notifies adapter
      * @param tweets
      */
-    public void addAll(ArrayList<Tweet> tweets) {
+    public void addAll(List<Tweet> tweets) {
         if (tweets!=null){
             mTweets.addAll(tweets);
             notifyDataSetChanged();

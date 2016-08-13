@@ -5,6 +5,7 @@ import android.content.Context;
 import com.codepath.apps.waffletweets.models.Tweet;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.scribe.builder.api.Api;
@@ -81,7 +82,29 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().post(apiUrl, params, handler);
     }
 
+    public void getMentionsTimeline( JsonHttpResponseHandler jsonHttpResponseHandler) {
+        String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+        //Specify params
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+//        if (max_id != null) {
+//            params.put("max_id", max_id);
+//        }
 
+        // Execute the request
+        getClient().get(apiUrl, params, jsonHttpResponseHandler);
+    }
+
+
+    public void getUserTimeline(String screenName, AsyncHttpResponseHandler jsonHttpResponseHandler){
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        //Specify params
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("screen_name", screenName);
+        // Execute the request
+        getClient().get(apiUrl, params, jsonHttpResponseHandler);
+    }
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
      * 	  i.e getApiUrl("statuses/home_timeline.json");

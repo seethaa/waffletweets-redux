@@ -12,6 +12,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -22,6 +23,13 @@ public class MentionsTimelineFragment extends TweetsListFragment {
     private TwitterClient mTwitterClient;
     private User mCurrentUser;
 
+    public static MentionsTimelineFragment newInstance(User currUser) {
+        MentionsTimelineFragment fg = new MentionsTimelineFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("currUser", Parcels.wrap(currUser));
+        fg.setArguments(args);
+        return fg;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

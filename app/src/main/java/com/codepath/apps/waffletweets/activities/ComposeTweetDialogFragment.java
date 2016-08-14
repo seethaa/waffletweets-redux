@@ -72,7 +72,8 @@ public class ComposeTweetDialogFragment extends DialogFragment {
             String timeStamp = new SimpleDateFormat(twitterFormat).format(new java.util.Date());
             tweet.setCreatedAt(timeStamp);
 
-            ComposeTweetDialogListener activity = (ComposeTweetDialogListener) getActivity();
+            //pass data back
+            ComposeTweetDialogListener activity = (ComposeTweetDialogListener) getParentFragment();
             activity.onFinishComposeTweetDialog(tweet);
             this.dismiss();
         } else {
@@ -183,9 +184,14 @@ public class ComposeTweetDialogFragment extends DialogFragment {
 
             }
         });
-        Glide.with(getContext()).load(mCurrentUser.getProfileImageURL()).centerCrop().placeholder(R.drawable.ic_launcher)
-        .bitmapTransform(new RoundedCornersTransformation(getContext(), 5, 5))
-        .into(ivProfileImage);
+
+
+        if (mCurrentUser!=null) {
+            String profile_img_url = mCurrentUser.getProfileImageURL();
+            Glide.with(getContext()).load(profile_img_url).centerCrop().placeholder(R.drawable.ic_launcher)
+                    .bitmapTransform(new RoundedCornersTransformation(getContext(), 5, 5))
+                    .into(ivProfileImage);
+        }
 
         return layout;
     }

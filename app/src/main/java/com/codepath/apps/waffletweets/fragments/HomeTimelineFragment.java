@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.codepath.apps.waffletweets.adapters.TweetsArrayAdapter;
 import com.codepath.apps.waffletweets.models.Tweet;
 import com.codepath.apps.waffletweets.models.User;
 import com.codepath.apps.waffletweets.network.TwitterApplication;
@@ -90,4 +91,40 @@ public class HomeTimelineFragment extends TweetsListFragment{
 
 
     }
+
+    public List<Tweet> getTweetsList(){
+        return super.mTweets;
+    }
+    public TweetsArrayAdapter getTweetsAdapter(){
+        return super.mTweetsAdapter;
+    }
+
+    /**
+     *  Send an API request to get the timeline JSON.
+     *  Fill in the recyclerview by creating the tweet objects from the JSON
+     */
+    private void postTweet(final Tweet tweet) {
+        mTwitterClient.postTweet(tweet, new JsonHttpResponseHandler() {
+            //success
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+                Log.d("DEBUG", jsonResponse.toString());
+
+                mTweets.add(0, tweet);
+                mTweetsAdapter.notifyItemInserted(0);
+
+            }
+
+            //failure
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("DEBUG", errorResponse.toString());
+
+            }
+        });
+
+
+    }
+
 }

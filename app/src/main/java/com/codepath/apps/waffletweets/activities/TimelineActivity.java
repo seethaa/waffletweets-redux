@@ -1,19 +1,13 @@
 package com.codepath.apps.waffletweets.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -23,10 +17,10 @@ import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.waffletweets.R;
+import com.codepath.apps.waffletweets.adapters.SmartFragmentStatePagerAdapter;
 import com.codepath.apps.waffletweets.adapters.TweetsArrayAdapter;
 import com.codepath.apps.waffletweets.fragments.HomeTimelineFragment;
 import com.codepath.apps.waffletweets.fragments.MentionsTimelineFragment;
-import com.codepath.apps.waffletweets.fragments.TweetsListFragment;
 import com.codepath.apps.waffletweets.models.Tweet;
 import com.codepath.apps.waffletweets.models.User;
 import com.codepath.apps.waffletweets.network.TwitterApplication;
@@ -34,22 +28,21 @@ import com.codepath.apps.waffletweets.network.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
-import org.parceler.Parcels;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineActivity extends AppCompatActivity implements ComposeTweetDialogFragment.ComposeTweetDialogListener {
+public class TimelineActivity extends AppCompatActivity{
     private TweetsArrayAdapter mTweetsAdapter;
     private ArrayList<Tweet> mTweets;
     private LinearLayoutManager mLinearLayoutManager;
-    private TweetsListFragment mTweetsListFragment;
     private User mCurrentUser;
     private TwitterClient mTwitterClient;
+
+    private SmartFragmentStatePagerAdapter adapterViewPager;
+
 
 
 
@@ -57,6 +50,29 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
+        ButterKnife.bind(this);
+
+
+//        adapterViewPager = new SmartFragmentStatePagerAdapter(getSupportFragmentManager()) {
+//            @Override
+//            public int getCount() {
+//                return 2;
+//            }
+//
+//            @Override
+//            public Fragment getItem(int position) {
+//                if (position ==0){
+//                    return new HomeTimelineFragment();
+//                }
+//                else if (position ==1){
+//                    return new MentionsTimelineFragment();
+//                }
+//                else{
+//                    return null;
+//                }
+//            }
+//        };
 
         //get the viewpager
         //VP indicator is what displays which page you're on within viewpager
@@ -84,7 +100,6 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setIcon(R.drawable.waffletweetslogofinal);
 
-        ButterKnife.bind(this);
 
 
 
@@ -116,79 +131,74 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
     }
 
-    @OnClick(R.id.fabCompose)
-    public void composeTweet(FloatingActionButton fab) {
-        showComposeTweetDialog();
-    }
-
-    /**
-     * Checks if an active network is available
-     *
-     * @return true if network is available, false otherwise
-     */
-    public boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
-    }
-
-    /**
-     * Checks if device is connected to the internet
-     *
-     * @return true if device is connected, false otherwise
-     */
-    public static boolean isOnline() {
-        Runtime runtime = Runtime.getRuntime();
-        try {
-            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
-            int exitValue = ipProcess.waitFor();
-            return (exitValue == 0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * Alert user to connect to network
-     */
-    protected void callNetworkDialog() {
-
-        AlertDialog.Builder alert = new AlertDialog.Builder(TimelineActivity.this);
-        alert.setTitle("No Connection Available");
-        alert.setMessage("Please check your network connection, and try again!");
-        alert.setPositiveButton("OK", null);
-        alert.show();
-    }
 
 
-    /**
-     * Calls Filter Dialog Fragment
-     */
-    private void showComposeTweetDialog() {
-        FragmentManager fm = getSupportFragmentManager();
+//    /**
+//     *  Send an API request to get the timeline JSON.
+//     *  Fill in the recyclerview by creating the tweet objects from the JSON
+//     */
+//    private void postTweet(final Tweet tweet) {
+//        mTwitterClient.postTweet(tweet, new JsonHttpResponseHandler() {
+//            //success
+//
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
+//                Log.d("DEBUG", jsonResponse.toString());
+//
+//                mTweets.add(0, tweet);
+//                mTweetsAdapter.notifyItemInserted(0);
+//
+//            }
+//
+//            //failure
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                Log.d("DEBUG", errorResponse.toString());
+//
+//            }
+//        });
+//
+//
+//    }
 
-        //pass in current user
-        Bundle args = new Bundle();
-        args.putParcelable("currUser", Parcels.wrap(mCurrentUser));
 
-        ComposeTweetDialogFragment composeTweetDialogFragment = newInstance();
-        composeTweetDialogFragment.setArguments(args);
-        composeTweetDialogFragment.show(fm, "compose_tweet");
-    }
+//    @Override
+//    public void onFinishComposeTweetDialog(Tweet tweet) {
+//        System.out.println("DEBUGGY: Got to finish");
+//
+//        postTweet(tweet);
+//
+//        refreshItems();
+//    }
 
-    /**
-     * Used for creating ComposeTweetDialogFragment and binding arguments
-     *
-     * @return
-     */
-    static ComposeTweetDialogFragment newInstance() {
-        ComposeTweetDialogFragment f = new ComposeTweetDialogFragment();
-        return f;
-    }
+
+//    /**
+//     * Checks if network is available and if device is online. If connected, it refreshes timeline items
+//     */
+//    private void refreshItems() {
+//
+//        if (isNetworkAvailable() && isOnline()) {
+////            HomeTimelineFragment homeTimelineFragment = (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
+////            HomeTimelineFragment.mTweets.clear();
+////            HomeTimelineFragment.mTweetsAdapter.notifyDataSetChanged();
+//
+////            TweetsListFragment fragmentDemo = (TweetsListFragment)
+////                    getSupportFragmentManager().findFragmentById(R.id.tweet_list_frag);
+////            fragmentDemo.refreshItems("some string");
+//
+////            populateTimeline(null);
+//
+//            // refresh complete
+////            mMaterialRefreshLayout.finishRefresh();
+//
+//            // load more refresh complete
+////            mMaterialRefreshLayout.finishRefreshLoadMore();
+//        } else {
+//            callNetworkDialog();
+//
+//        }
+//    }
+
 
 
 
@@ -217,63 +227,11 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     }
 
 
-    /**
-     *  Send an API request to get the timeline JSON.
-     *  Fill in the recyclerview by creating the tweet objects from the JSON
-     */
-    private void postTweet(final Tweet tweet) {
-        mTwitterClient.postTweet(tweet, new JsonHttpResponseHandler() {
-            //success
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonResponse) {
-                Log.d("DEBUG", jsonResponse.toString());
-
-                mTweets.add(0, tweet);
-                mTweetsAdapter.notifyItemInserted(0);
-
-            }
-
-            //failure
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG", errorResponse.toString());
-
-            }
-        });
 
 
-    }
-
-    /**
-     * Checks if network is available and if device is online. If connected, it refreshes timeline items
-     */
-    private void refreshItems() {
-
-        if (isNetworkAvailable() && isOnline()) {
-            mTweets.clear();
-            mTweetsAdapter.notifyDataSetChanged();
-//            populateTimeline(null);
-
-            // refresh complete
-//            mMaterialRefreshLayout.finishRefresh();
-
-            // load more refresh complete
-//            mMaterialRefreshLayout.finishRefreshLoadMore();
-        } else {
-            callNetworkDialog();
-
-        }
-    }
 
 
-    @Override
-    public void onFinishComposeTweetDialog(Tweet tweet) {
 
-        postTweet(tweet);
-
-        refreshItems();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -304,27 +262,37 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
     }
 
 
+
     //return order of fragments in view pager
-    public class TweetsPagerAdapter extends FragmentPagerAdapter{
+    public class TweetsPagerAdapter extends SmartFragmentStatePagerAdapter {
         private String tabTitles[] = {"Home", "Mentions"};
 
         //adapter gets the manager to insert or remove fragment from activity
-        public TweetsPagerAdapter(FragmentManager fm){
+        public TweetsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         //the order and creation of fragments within the pager
         @Override
         public Fragment getItem(int position) {//return fragment for position
-            if (position ==0){
+            if (position == 0) {
                 return new HomeTimelineFragment();
-            }
-            else if (position ==1){
+            } else if (position == 1) {
                 return new MentionsTimelineFragment();
-            }
-            else{
+            } else {
                 return null;
             }
+
+//            switch (position) {
+//                case 0: // Fragment # 0 - This will show FirstFragment
+//                    return FirstFragment.newInstance(0, "Page # 1");
+//                case 1: // Fragment # 0 - This will show FirstFragment different title
+//                    return FirstFragment.newInstance(1, "Page # 2");
+//                case 2: // Fragment # 1 - This will show SecondFragment
+//                    return SecondFragment.newInstance(2, "Page # 3");
+//                default:
+//                    return null;
+//            }
         }
 
         //return tab title
@@ -339,6 +307,5 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
             return tabTitles.length;
         }
     }
-
 
 }

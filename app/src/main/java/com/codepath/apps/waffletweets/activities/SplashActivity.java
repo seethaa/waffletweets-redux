@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.codepath.apps.waffletweets.R;
 
 public class SplashActivity extends AppCompatActivity {
-    private final int SPLASH_DURATION = 3000;
+    private final int SPLASH_DURATION = 1000;//3000;
 
 
     @Override

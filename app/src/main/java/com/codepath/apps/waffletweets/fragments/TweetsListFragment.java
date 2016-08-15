@@ -65,12 +65,6 @@ public abstract class TweetsListFragment extends Fragment {
         mRecyclerView.setAdapter(mTweetsAdapter);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-//        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                System.out.println("DEBUGGY: GOT HEREEEE");
-//                showComposeTweetDialog();
-//            }
-//        });
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
             @Override
@@ -114,16 +108,6 @@ public abstract class TweetsListFragment extends Fragment {
         ComposeTweetDialogFragment f = new ComposeTweetDialogFragment();
         return f;
     }
-
-//    @Override
-//    public void onFinishComposeTweetDialog(Tweet tweet) {
-//        System.out.println("DEBUGGY: Got to finish");
-//
-//        postTweet(tweet);
-//
-//        refreshItems();
-//
-//    }
 
 
     /**

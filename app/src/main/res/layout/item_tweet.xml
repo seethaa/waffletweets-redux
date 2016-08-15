@@ -81,6 +81,12 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <include layout="@layout/tweet_actions"
+        android:layout_below="@+id/tvBody"
+        android:layout_height="20dp"
+        android:layout_width="match_parent">
+
+    </include>
     <!-- divider -->
     <View
         android:layout_width="match_parent"

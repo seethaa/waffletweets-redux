@@ -112,6 +112,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
     public void onProfileView(MenuItem mi){
         //launch the profile view
+        getCurrentUserInfo();
 
         Intent i = new Intent(this, ProfileActivity.class);
         i.putExtra("user", Parcels.wrap(mCurrentUser));
@@ -206,9 +207,6 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
                 mCurrentUser = User.fromJSON(jsonResponse);
 
-                if (mCurrentUser == null){
-                    System.out.println("DEBUGGY USER IS NULL");
-                }
 
                 // Log.d("DEBUG", mTweetsAdapter.toString());
             }
@@ -276,15 +274,11 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
 
     @Override
     public void onFinishComposeTweetDialog(Tweet tweet) {
-        System.out.println("DEBUGGY TWEET: " + tweet.getUser().getName());
-
         postTweet(tweet);
-
         refreshItems();
     }
 
     private void refreshItems() {
-        System.out.println("DEBUGGY in Timeline");
 //        TweetsListFragment fragmentDemo = (TweetsListFragment)
 //                getSupportFragmentManager().findFragmentById(R.id.).findFragmentByTag("HOME_FRAGMENT");
 //        fragmentDemo.refreshItems();

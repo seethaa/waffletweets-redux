@@ -68,6 +68,8 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         //find the pager sliding tabs
         PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
+        tabStrip.setIndicatorColor(Color.parseColor("#1da1f2"));
+
         //attach the pagertabs to the viewpager
         tabStrip.setViewPager(vpPager);
 

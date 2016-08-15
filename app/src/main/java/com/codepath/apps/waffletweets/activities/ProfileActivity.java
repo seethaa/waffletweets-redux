@@ -12,18 +12,16 @@ import com.codepath.apps.waffletweets.fragments.UserTimelineFragment;
 import com.codepath.apps.waffletweets.models.User;
 import com.codepath.apps.waffletweets.network.TwitterApplication;
 import com.codepath.apps.waffletweets.network.TwitterClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cz.msebera.android.httpclient.Header;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ProfileActivity extends AppCompatActivity {
     TwitterClient mTwitterClient;
-    User mUser;
+    static User mCurrentUser = null;
 
     @BindView(R.id.tvName)
     TextView tvName;
@@ -42,26 +40,21 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         ButterKnife.bind(this);
-
         mTwitterClient = TwitterApplication.getRestClient();
-        //get account info.
-        mTwitterClient.getUserInfo(new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                mUser = User.fromJSON(response);
-                //my current user account's information
-                getSupportActionBar().setTitle("@" + mUser.getScreenName());
-                populateProfileHeader(mUser);
-            }
-        });
+
+        mCurrentUser = (User) Parcels.unwrap(getIntent().getParcelableExtra("user"));
+
+        //my current user account's information
+        getSupportActionBar().setTitle("@" + mCurrentUser.getScreenName());
+
+        populateProfileHeader(mCurrentUser);
 
 
-        //get the screenname from the activity that launches this activity (TimelineActivity)
 
-        String screenName = getIntent().getStringExtra("screen_name");
+
         if (savedInstanceState == null) {
             //create user timeline fragment
-            UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(screenName);
+            UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(mCurrentUser.getScreenName());
             //display user fragment within this activity (dynamically)
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             //transaction is a statement that you want to change what fragment is on the screen
@@ -69,6 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
             ft.commit();
         }
     }
+
 
     private void populateProfileHeader(User mUser) {
         tvName.setText(mUser.getName());

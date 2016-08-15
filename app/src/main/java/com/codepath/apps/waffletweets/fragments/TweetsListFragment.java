@@ -19,6 +19,7 @@ import com.codepath.apps.waffletweets.models.Tweet;
 import com.codepath.apps.waffletweets.models.User;
 import com.codepath.apps.waffletweets.network.TwitterApplication;
 import com.codepath.apps.waffletweets.network.TwitterClient;
+import com.codepath.apps.waffletweets.utils.EndlessRecyclerViewScrollListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
@@ -32,15 +33,15 @@ import cz.msebera.android.httpclient.Header;
 /**
  * Created by seetha on 8/9/16.
  */
-public class TweetsListFragment extends Fragment {
-    private TweetsArrayAdapter mTweetsAdapter;
-    private ArrayList<Tweet> mTweets;
-    private LinearLayoutManager mLinearLayoutManager;
+public abstract class TweetsListFragment extends Fragment {
+    protected TweetsArrayAdapter mTweetsAdapter;
+    protected ArrayList<Tweet> mTweets;
+    protected LinearLayoutManager mLinearLayoutManager;
     private User mCurrentUser;
     private TwitterClient mTwitterClient;
 
 
-    private MaterialRefreshLayout mMaterialRefreshLayout;
+    protected MaterialRefreshLayout mMaterialRefreshLayout;
     //    @BindView(R.id.lvTweets)
     RecyclerView mRecyclerView;
 
@@ -71,19 +72,23 @@ public class TweetsListFragment extends Fragment {
 //            }
 //        });
 
-//        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
-//            @Override
-//            public void onLoadMore(int page, int totalItemsCount) {
-//
-//                int lastTweetIndex = mTweets.size() - 1;
-//                Long max_id = mTweets.get(lastTweetIndex).getUid();
-//                populateTimeline(max_id);
-//            }
-//        });
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+
+                int lastTweetIndex = mTweets.size() - 1;
+                Long max_id = mTweets.get(lastTweetIndex).getUid();
+                populateTimeline(max_id);
+            }
+        });
+
+
 
 
         return v;
     }
+
+    protected abstract void populateTimeline(Long max_id);
 
     /**
      * Calls Filter Dialog Fragment

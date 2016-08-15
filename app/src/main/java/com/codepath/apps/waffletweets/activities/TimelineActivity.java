@@ -112,6 +112,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeTweetD
         //launch the profile view
 
         Intent i = new Intent(this, ProfileActivity.class);
+        i.putExtra("user", Parcels.wrap(mCurrentUser));
         startActivity(i);
 
     }

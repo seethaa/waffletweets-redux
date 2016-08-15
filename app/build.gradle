@@ -62,4 +62,6 @@ dependencies {
 
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
 }

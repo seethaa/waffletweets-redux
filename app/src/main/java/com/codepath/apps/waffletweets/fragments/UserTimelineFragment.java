@@ -40,7 +40,7 @@ public class UserTimelineFragment extends TweetsListFragment{
 
         mTwitterClient = TwitterApplication.getRestClient();
         getCurrentUserInfo(); //get user account info and save as user object
-        populateTimeline(); //populate initial timeline
+        populateTimeline(null); //populate initial timeline
 
     }
 
@@ -70,7 +70,7 @@ public class UserTimelineFragment extends TweetsListFragment{
 
     //send an API request to get the timeline JSON
     //fill in the listview by creating the tweet objects from the JSON
-    private void populateTimeline() {
+    protected void populateTimeline(Long max_id) {
         String screenName = getArguments().getString("screen_name");
 
 

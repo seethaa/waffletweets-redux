@@ -41,6 +41,8 @@ public class HomeTimelineFragment extends TweetsListFragment{
         getCurrentUserInfo(); //get user account info and save as user object
         populateTimeline(null); //populate initial timeline
 
+
+
     }
 
     private void getCurrentUserInfo() {
@@ -69,7 +71,7 @@ public class HomeTimelineFragment extends TweetsListFragment{
 
     //send an API request to get the timeline JSON
     //fill in the listview by creating the tweet objects from the JSON
-    private void populateTimeline(Long max_id) {
+    protected void populateTimeline(Long max_id) {
         mTwitterClient.getHomeTimeline(max_id, new JsonHttpResponseHandler() {
             //success
 

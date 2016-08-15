@@ -1,6 +1,8 @@
 package com.codepath.apps.waffletweets.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -13,14 +15,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.waffletweets.R;
+import com.codepath.apps.waffletweets.activities.ProfileActivity;
 import com.codepath.apps.waffletweets.models.Tweet;
 import com.codepath.apps.waffletweets.models.User;
+import com.codepath.apps.waffletweets.utils.PatternEditableBuilder;
+
+import org.parceler.Parcels;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -124,7 +131,7 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
     public void onBindViewHolder(TweetsArrayAdapter.ViewHolder holder, int position) {
 
         // Get the data model based on position
-        Tweet tweet = mTweets.get(position);
+        final Tweet tweet = mTweets.get(position);
 
         // Set item views based on your views and data model
         String createdAt = tweet.getCreatedAt();
@@ -155,10 +162,48 @@ public class TweetsArrayAdapter extends RecyclerView.Adapter<TweetsArrayAdapter.
 
         //populate data into subviews
         holder.tvBody.setText(tweet.getBody());
+
+        //set clickable spans
+        // Style clickable spans based on pattern
+        //@mentions
+        new PatternEditableBuilder().
+                addPattern(Pattern.compile("\\@(\\w+)"), Color.BLUE,
+                        new PatternEditableBuilder.SpannableClickedListener() {
+                            @Override
+                            public void onSpanClicked(String text) {
+                                System.out.println("DEBUGGY SPANS: Clicked username: " + text);
+                            }
+                        }).into(holder.tvBody);
+
+        //#hashtags
+        new PatternEditableBuilder().
+                addPattern(Pattern.compile("\\#(\\w+)"), Color.BLUE,
+                        new PatternEditableBuilder.SpannableClickedListener() {
+                            @Override
+                            public void onSpanClicked(String text) {
+                                System.out.println("DEBUGGY SPANS: Clicked tag: " + text);
+                            }
+                        }).into(holder.tvBody);
+
         holder.ivProfileImage.setImageResource(android.R.color.transparent);
 
+        //set tag for profile clicks
+        final String usernameTag = tweet.getUser().getScreenName();
+//        holder.ivProfileImage.setTag(1);
+
+        //set onclick listener for imageview
+        holder.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra("user", Parcels.wrap(tweet.getUser()));
+//                i.putExtra("screen_name", usernameTag);
+                getContext().startActivity(i);
+            }
+        });
 
         String thumbnail = tweet.getUser().getProfileImageURL();
+
         //check if thumbnail is empty since NYTimesAPI sometimes returns ""
         if (!TextUtils.isEmpty(thumbnail)) {
             Glide.with(getContext()).load(thumbnail).centerCrop().placeholder(R.drawable.ic_launcher)
